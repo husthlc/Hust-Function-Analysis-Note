@@ -1,0 +1,741 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{ctex}
+\usepackage{geometry}
+\usepackage{amssymb}
+\usepackage{amstext}
+\usepackage{amsmath}
+\geometry{left=2.0cm,right=2.0cm,top=2.5cm,bottom=2.5cm}
+\begin{document}
+\section{泛函分析及应用}
+	在大一学习到的微积分中，我们主要研究的是$R^n\rightarrow R$的映射，即一般意义上的函数,一对一或多对一。而上个学期中的矩阵论我们学习到了矩阵的相关知识，了解到矩阵其实是一个变换，可以将一个向量变换成另一个向量，同时伪逆等操作还可使一个矩阵的维度发生改变，即映射为$R^n\rightarrow R^m$。
+	
+	泛函主要研究的是无穷维空间到无穷维空间的线性映射，即$R^{\infty}\rightarrow R^{\infty}$的映射，最主要的还是研究线性泛函，即$R^{\infty}\rightarrow R$的映射。
+	
+	在泛函分析这门课程中，我们会接触到许多类型的空间，从特殊到一般，可以描述为：有限维空间$\rightarrow$希尔伯特空间（完备的内积空间）$\rightarrow$巴拿赫（Banach）空间（完备的赋范空间）$\rightarrow$ 一般的度量空间$\rightarrow$拓扑空间。本课程主要研究这些空间及空间之间的线性变换。
+\section{抽象空间}
+\subsection{Banach空间}
+\subsubsection{范数定义}
+设$\bf{X}$是数域$\bf{K}$（$\bf{R}$或$\bf{C}$）上的向量（即线性）空间，若对每个$\bf{X}$中的元素（即向量）$x$，指定了唯一的非负实数$\Vert x \Vert$，称为$x$的范数，它满足以下的范数公理（对$\bf{X}$中任意的$x$、$y$及$\bf{K}$中的$a$）：
+\begin{enumerate}
+	\item 齐次性：$\Vert a x\Vert = \vert a\vert \Vert x\Vert$;
+	\item 三角不等式：$\Vert x+y \Vert \leq \Vert x \Vert + \Vert y \Vert$;
+	\item 正定性：$\Vert x \Vert\geq 0,\Vert x \Vert=0 \Leftrightarrow x=0$
+\end{enumerate}
+则称$\bf{X}$为数域$\bf{K}$上的赋范空间。
+当$\bf{K}=\bf{R}$（或$\bf{C}$）时，$\bf{X}$为实（复）赋范空间。
+
+\textbf{例1}：有界函数空间$\bf{B}$$(\Omega)$，$\Omega$为任一非空集，$\bf{B}$$(\Omega)$是$\Omega$上有界函数之全体，对任意的$u\in$$\bf{B}$$(\Omega)$，定义：
+\begin{equation}
+	\|u\|_{0}=\sup _{x \in \Omega}|u(x)|
+\end{equation}
+验证$u\in$$\bf{B}$$(\Omega)$是赋范空间。
+
+\textbf{例2}：多项式空间$P[x]$，范数定义如上。
+
+\textbf{例3}：连续函数空间，范数定义如上。
+
+\textbf{例4}：$l^p$空间，$1\leq p < +\infty$，$x\in l^p$，$x=\left(\xi_{1}, \xi_{2}, \cdots, \xi_{n}, \cdots\right)$，范数定义：
+\begin{equation}
+\|x\|_{p}=\left(\sum_{n=1}^{+\infty}\left|\xi_{n}\right|^{p}\right)^{\frac{1}{p}}<\infty
+\end{equation}
+
+\textbf{例5}：$l^{\infty}$空间，范数定义：
+\begin{equation}
+\|x\|_{\infty}=\sup _{n \geq 1}\left|\xi_{n}\right|<\infty
+\end{equation}
+
+\textbf{附}：\textbf{微积分中函数收敛（处处收敛）}：已知$u_n(x)$，$x\in [a,b]$，$u_n(x)\rightarrow u(x)$意义：
+任意给定的$x\in [a,b]$，$\forall \varepsilon>0$，$\exists N(\varepsilon,x)$，当$n>N(\varepsilon,x)$时，恒有
+\begin{equation}
+	\vert u_n(x)-u(x)\vert <\varepsilon
+\end{equation}
+
+\textbf{一致收敛}：$u_n(x)\rightarrow u$：$\forall\varepsilon>0$，$\exists N(\varepsilon)$，对$\forall x\in [a,b]$，当$n>N(\varepsilon)$时，恒有$\vert u_n(x)-u(x)\vert<\varepsilon$。
+$\Vert u_n-u \Vert_0\rightarrow 0\Leftrightarrow\sup _{x \in[a, b]}\left|u _n(x)-u(x)\right|\rightarrow 0\Leftrightarrow u_{n} \rightarrow u$（一致收敛）
+
+函数收敛是对于每个点收敛，即处处收敛，而一致收敛不仅要求处处收敛，还要求收敛速度一致。
+\subsubsection{距离}
+定义：由范数诱导的距离（度量），$d(x,y)=\Vert x-y\Vert$。
+
+度量的要求：
+
+\begin{enumerate}
+	\item 对称性：$d(x,y)=d(y,x)$；
+	\item 三角不等式 $d(x,y)\leq d(x,z)+d(z,y)$；
+	\item 正定性，$d(x,y)\geq 0,d(x,y)=0\Leftrightarrow x=y$.
+\end{enumerate}
+
+两集合之间的距离：
+\begin{equation}
+	{d}(\mathrm{A}, \mathrm{B})=\inf _{a \in A, b \in B}\|a-b\| .
+\end{equation}
+
+集合$\mathrm{A}$的直径：
+\begin{equation}
+	\mathrm{diam} A=\sup _{a, b \in A}\|a-b\| .
+\end{equation}
+\subsubsection{极限}
+极限定义：设序列$\{x_n,n\in N\}\subset \bf{X}$，$x\in \bf{X}$，若$\Vert x_n-x\Vert\rightarrow 0(n\rightarrow \infty)$，则说序列$\{x_n\}$范数收敛（简称收敛）于$x$，记为
+\begin{equation}
+	x_n\rightarrow x, n\rightarrow \infty
+\end{equation}
+
+\subsubsection{完备性}
+\textbf{Cauchy}列：设序列${x_n}\subset \bf{X}$，满足以下Cauchy条件：
+\begin{equation}
+	\lim_{m,n}\Vert x_n-x_m\Vert =0
+\end{equation}
+则称$x_{n}$为Cauchy列。
+
+在数学中，一个柯西列是指一个这样一个序列，它的元素随着序数的增加而愈发靠近（0.99999….）。更确切地说，在去掉有限个元素后，可以使得余下的元素中任何两点间的距离的最大值不超过任意给定的正的常数。
+
+\textbf{完备空间}：若空间$\bf{X}$中所有的Cauchy列都收敛则称空间完备。
+
+\textbf{Banach}空间：完备的赋范空间。
+
+\textbf{Cauchy列与收敛序列的关系}：收敛序列一定是Cauchy列，空间完备时两者等价。
+
+\textbf{例1}：证明任何有限维赋范空间都是完备空间即Banach空间。
+
+\qquad\textbf{证}：
+Cauchy列等价于各个分量是Cauchy列,再利用$\mathbf{R}$的完备性。$\hfill\blacksquare$
+~\\
+
+\textbf{例2}：多项式函数空间依sup范数是不完备的。
+\begin{itemize}
+	\item[]
+	\textbf{证}：比如：
+\begin{equation}
+u_{n}(x)=\sum_{k=0}^{n} \frac{x^{k}}{k !} \quad x \in[0,1]
+\end{equation}
+
+虽然是多项式序列，但收敛于指数函数，不再属于多项式函数空间。故多项式函数空间依sup范数是不完备的。$\hfill\blacksquare$
+\end{itemize}
+~\\
+\textbf{例3}：有界函数空间$\bf{B}$$(\Omega)$依sup范数是Banach空间。
+（证明思想：证明空间中任意Cauchy列都收敛即都有极限）
+
+
+\begin{itemize}
+	\item[]
+	\textbf{证}：（1）先对$\bf{B}$$(\Omega)$中的任一Cauchy列$u_n$，在某种弱意义下找出极限函数$u(x)$：
+	
+由条件有：$\forall \varepsilon>0$，$\exists N$，当$n,m>N$时，对于$\forall x\in \Omega$有$\vert u_n(x)-u_m(x)\vert<\varepsilon$
+
+固定某个$x\in {\Omega}$，则$\{u_n(x),n\in \mathbb{N}\}$为Cauchy序列，存在极限记为$u(x)$（利用了$\mathbb{R}$的完备性）
+
+（2）固定$\vert u_n(x)-u_m(x)\vert<\varepsilon$中的$n$，令$m\rightarrow \infty$，有$\vert u_n(x)-u(x)\vert\leq\varepsilon$，$\forall x\in \Omega,n>N$，即有
+\begin{equation}
+	\lim_{n\rightarrow\infty}\sup_{x\in \Omega}\vert u_n(x)-u(x)\vert=0
+\end{equation}
+即
+\begin{equation}
+	\Vert u_n-u\Vert_0\rightarrow 0
+\end{equation}
+显然$\Vert u\Vert_0=\Vert(u-u_n)+u_n\Vert_0\leq\Vert u-u_n\Vert_0+\Vert u_n\Vert_0\leq\varepsilon+\Vert u_n\Vert_0<\infty\Leftrightarrow$：
+
+$u\in \bf{B}$$(\Omega)$且$u_n\rightarrow u$（范数收敛)。$\hfill\blacksquare$\end{itemize}
+
+\subsubsection{子空间}
+定义：设$\bf{V}$是数域$\bf{F}$上的线性空间，$\bf{W}$是$\bf{V}$的子集，若对W中的任意元素$\alpha$ ,$\beta$，及$k\in \bf{F}$，按$V$中的加法和数乘有$\alpha +\beta \in W$和$k\alpha \in W$，
+则$\bf{W}$也是数域$\bf{F}$上的线性空间，称$\bf{W}$为$\bf{V}$的线性子空间（简称子空间）。	
+
+\textbf{闭子空间}：子空间中对极限运算封闭。（线性空间是对线性运算封闭，闭子空间则是可以在子空间中进行线性运算及极限运算。）	
+
+\textbf{闭子空间与完备子空间的关系}：完备子空间一定是闭子空间，闭子空间不一定完备。当全空间完备时，完备子空间与闭子空间等价。
+\begin{itemize}
+  \item \textbf{完备子空间一定是闭子空间}：证：设 $A \subset(X, d)$ 且 $A$ 完备, 下证 $A$ 是闭的。设 $\forall x_{n} \in A$ 且 $x_{n} \rightarrow x_{0}, \mathrm{n} \rightarrow \infty$, 要证 $A$ 闭, 即证 $x_{0} \in A$。 由于 $x_{n} \rightarrow x_{0}, \mathrm{n} \rightarrow \infty$, 则 $\left\{x_{n}\right\}$ 为 $X$ 中的 Cauchy 列。于是 $\left\{x_{n}\right\}$ 也是 $A$ 中的 Cauchy 列. 由 $A$ 的完备性知, $x_{0} \in A$。证毕
+  \item \textbf{闭子空间不一定完备}：度量空间$R$的闭子集$A$，包含了$A$所有的极限点，但是由于空间$R$本身不完备，$A$可能含有不收敛到$R$里的柯西列（从而也不收敛到$A$里），从而$A$未必是完备的。比如说有理数集$\bf{Q}$加上标准度量$d(x,y)=|x-y|$，那么$\bf{Q}$在$\bf{Q}$里是闭的，然而显然不完备。
+  \item \textbf{完备度量空间的闭子集是完备的}：完备度量空间$R$的闭子集$A$，一方面$A$中的任意柯西列的极限都在$R$里，另一方面这些极限作为$A$的极限点又都在$A$里（因为$A$闭），所以完备度量空间的闭子集是完备的。
+\end{itemize}
+闭集是对收敛序列封闭，完备集是对柯西列封闭，收敛序列肯定是柯西列。柯西列不一定是收敛序列。
+
+若$\bf{A},\bf{B}$为$\bf{X}$的子空间，每个$x\in{\bf{X}}$有唯一分解$x=a+b,a\in\bf{A},b\in{\bf{B}}$，则称$\bf{X}$是$\bf{A}$与$\bf{B}$的直和，记作$\bf{A}\oplus \bf{B}=\bf{X}$。
+
+令$P_{\bf{A}}:\bf{X}\rightarrow \bf{A}$， $P_{\bf{A}}x=a$，称$P_{\bf{A}}$为$\bf{X}$到$\bf{A}$上的投影映射。
+
+$P_{\bf{B}}:\bf{X}\rightarrow \bf{B}$， $P_{\bf{B}}x=b$，则$P_{\bf{A}}+P_{\bf{B}}=\mathbb{I}$（恒等映射）
+若$\bf{A}$与$\bf{B}$都为闭子空间，则分解$\bf{X}=\bf{A}\oplus\bf{B}$称为拓扑直和。
+
+\subsubsection{积空间}
+\textbf{形式}：$\bf{X_1}$$\times$$\bf{X_2}$
+
+形象理解：可把它看作平面坐标系，范数定义有多种方法，只要保证范数收敛等价于依坐标收敛就称该范数为积范数。
+
+\subsubsection{同构}
+\textbf{线性同构}：数域$\bf{P}$上两个线性空间$\bf{V}$,$\bf{V'}$，若存在双射$\sigma$:$\bf{V}\to \bf{V'}$满足：
+$\forall \alpha,\beta\in \bf{V},\forall k\in \bf{P}$，
+1. $\sigma(\alpha+\beta)=\sigma(\alpha)+\sigma(\beta)$，
+2. $\sigma(k\alpha)=k\sigma(\alpha)​$，则称$\bf{V},\bf{V'}$同构，$\sigma$称为同构映射。
+
+\textbf{拓扑同构}：从赋范空间$\bf{X}$到赋范空间$\bf{Y}$上的线性同构$T$满足：存在常数$\alpha,\beta$，对任意的$x\in \bf{X}$，有$\alpha\Vert x\Vert\leq \Vert Tx\Vert\leq \beta\Vert x \Vert$，则称$T$是从$\bf{X}$到$\bf{Y}$的一个拓扑同构，空间$\bf{X}$和$\bf{Y}$是拓扑同构。拓扑同构的空间具有相同的收敛性。
+
+\textbf{等距同构}：$\Vert Tx\Vert=x,\forall x$
+
+\textbf{等距嵌入}：空间$\bf{X}$与空间$\bf{Y}$的某个子空间$\bf{Z}$是等距同构，则称$\bf{X}$可等距嵌入$\bf{Z}$。
+
+\textbf{等价范数}：若在向量空间$\bf{X}$上定义两种不同的范数：$(\bf{X},\Vert \cdot \Vert^{(1)})$，$(\bf{X},\Vert \cdot \Vert^{(2)})$，若存在常数$\alpha,\beta>0$，对$\forall x\in \bf{X}$，有$\alpha \Vert x\Vert^{(1)}\leq \Vert x\Vert^{(2)}\leq \beta\Vert x\Vert^{(1)}$，则称两范数等价。等价的范数有相同的收敛性。（在拓扑同构意义上，该两个赋范空间是拓扑同构的）。
+
+\subsection{函数空间}
+主要研究：$L^p$空间和$C^m$空间
+\subsubsection{性质较差的函数空间$L^p$}
+设$J=[a,b]$为有界闭区间，$1\leq p=\frac{q}{q-1}\leq +\infty,\frac{1}{q}+\frac{1}{p}=1$。对$J$上任一Lebesgue（勒贝格）可测函数$u(x)$，定义其$L^p$范数：
+\begin{equation}
+	\|u\|_{p}=\left(\int_{a}^{b}|u(x)|^{p} d x\right)^{\frac{1}{p}}, 1 \leq p<+\infty
+\end{equation}
+\begin{equation}
+	\|u\|_{\infty}=\inf _{A \subset J, m A=0} \sup _{x \in J-A}|u(x)|, p=+\infty
+\end{equation}
+上述积分为Lebesgue积分，$mA$为Lebesgue测度。
+
+令$\mathrm{L}^{p}(J)=\left\{u: u \text { 在J上可测且 }\|u\|_{p}<+\infty\right\}$，称$u\in L^p(J)$为$p$次可积函数，$u\in L^\infty(J)$为本性有界函数。依$L^p$范数收敛也称$p$次平均收敛。$p=2$时称为均方收敛。
+
+\textbf{定理}：若把J上两个几乎处处相等的函数当作同一函数，则$L^p(J)$依$L^p$范数是Banach空间。
+\begin{itemize}
+	\item[]
+	\textbf{证}：不妨设$1<p<\infty$，利用不等式
+	\begin{equation}
+		|u+v|^p\leq 2^p(|u|^p+|v|^p)
+	\end{equation}
+	容易验证$L^p(J)$是一向量空间。下面验证范数公理及完备性条件。
+	
+	（i）验证范数公理。直接看出$\|\cdot\|_p$满足齐次性与正定性，故只需验证三角不等式。为此，首先建立一个不等式：
+	\begin{equation}
+		x^\alpha y^{1-\alpha}\leq \alpha x+(1-\alpha)y.(x,y\geq 0,0<\alpha<1)
+	\end{equation}
+	不妨设$x>y$。固定$y\geq 0$，令$\varphi(x)=\alpha x+(1-\alpha)y-x^{\alpha} y^{1-\alpha}$，则
+	\begin{equation}
+		\varphi'(x)=\alpha[1-(y/x)^{1-\alpha}]>0,x>y
+	\end{equation}
+	于是$\varphi(x)\geq \varphi(y)=0$，这推出不等式(15)。
+	
+	现在利用不等式(15)来建立著名的\textbf{Holder不等式}：任给$u\in L^p(J),v\in L^q(J)$，有
+	\begin{equation}
+		\|uv\|_1\leq \|u\|_p\|v\|_q
+	\end{equation}
+	不妨设$\|u\|_p\|v\|_q>0$，否则上述不等式自动成立，于是
+	\begin{equation}
+\begin{aligned}
+\frac{\|uv\|_1}{\|u\|_p\|v\|_q} &=\int_{a}^{b} \frac{|u(x) v(x)|}{\|u\|_{p}\|v\|_{q}} d x \\
+&=\int_{a}^b(\frac{|u|^p}{\|u\|^p_p})^{\frac{1}{p}}(\frac{|v|^q}{\|v\|^q_q})^{\frac{1}{q}}dx\\
+& \leqslant \int_{a}^{b}\left(\frac{|u|^{p}}{p \|u \|_{p}^{p}}+\frac{|v|^q}{q \|v\|_q^q}\right) d x \quad\left(\text { 取 } \alpha=p^{-1}\right. \text { 用式 (15)) }\\
+&=\frac{1}{p}+\frac{1}{q}=1
+\end{aligned}
+\end{equation}
+这表明式(17)成立。
+
+利用Holer不等式，即可推出三角不等式：任给$u,v\in L^p(J)$，有：
+\begin{equation}
+\begin{aligned}
+\|u+v\|_{p}^{p} &=\int_{a}^{b}|u+v||u+v|^{p-1} \mathrm{~d} x \\
+& \leqslant \||u||u+v|^{p-1}\|_1+\||v||u+v|^{p-1}\|_1\\
+& \leqslant\left(\|u\|_{p}+\|v\|_{p}\right)\left\||u+v|^{p-1}\right\|_{q}(\text { 用式 }(17)) \\
+&=\left(\|u\|_{p}+\|v\|_{p}\right)\left\|{u+v}\right\|_{p}^{p / q},(\text { 用 }(p-1) q=p)
+\end{aligned}
+\end{equation}
+以上不等式两端同时除以$\|u+v\|_p^{p/q}$即得$\|u+v\|_p\leq \|u\|_p+\|v\|_p$。
+
+（ii）证完备性。设$\{u_k\}$$\subset L^p(J)$为Cauchy列，即
+\begin{equation}
+	\lim_{m,n}\|u_m-u_n\|_p=0
+\end{equation}
+则可递次取出下标$n_1<n_2<\cdots$，使得
+\begin{equation}
+	\|u_n-u_{n_k}\|<2^{-k}.(n\geq n_k,k=1,2,\cdots)
+\end{equation}
+令$v_k=u_{n_{k+1}}-u_{n_k}$，$v=\sum_1^\infty |v_k|$，则
+\begin{equation}
+	\begin{aligned}
+		\|v\|_p&=\left[\int_a^b\lim_n(\sum_1^n|v_k|^p)dx\right]^{1/p}\\
+		&=\lim_n\left[\int_a^b(\sum_1^n|v_k|)^pdx\right]^{1/p}\\
+		&=\lim_n\|\sum_1^n|v_k|\|_p\\
+		&\leqslant\lim_n\sum_1^n\|v_k\|_p\\
+		&\leqslant\lim_n\sum_1^n2^{-k}<\infty
+	\end{aligned}
+\end{equation}
+可见$v\in L^p(J)$，因而$v$在$J$上几乎处处有限，即$\sum|v_k|<\infty$，a.e..这表明级数$\sum v_k$几乎处处绝对收敛，从而序列$\{u_k\}$几乎处处收敛。设$u_{n_k}\rightarrow u$，a.e.(k$\rightarrow \infty$)，则
+\begin{equation}
+\begin{aligned}
+	\|u_n-u\|_p^p&=\int_a^b\lim_k|u_n-u_{n_k}|^pdx\\
+	&=\varliminf_k\int_a^b|u_n-u_{n_k}|^pdx
+\end{aligned}
+\end{equation}
+故
+\begin{equation}
+	\begin{aligned}
+		\|u_n-u\|_p&\leqslant\varlimsup_k\|u_n-u_{n_k}\|_p\\
+		\varlimsup_n\|u_n-u\|_p&\leqslant\varlimsup_n\varlimsup_k\|u_n-u_k\|_p=0
+	\end{aligned}
+\end{equation}
+这表明$\|u_n-u\|_p\rightarrow 0(n\rightarrow\infty),u\in L^p(J)$，完备性得证。
+\end{itemize}
+
+\textbf{定理}：若$1\leqslant r<s<+\infty$，则有$L^s(J)\subset L^r(J)$。
+\begin{itemize}
+	\item[]
+	若$1\leqslant r<s<+\infty,u\in L^s[a,b]$，取$p=s/r,q=p/({p-1}),x(x)\equiv 1$则
+	\begin{equation}
+		\begin{aligned}
+			\|u\|_r^r&=\||u|^r\|_1\\
+			&=\int_a^b|u|^r\cdot 1dx\\
+			&\leqslant \||u|^r\|_p\|1\|_q\\
+			&=(b-a)^{1/q}\|u\|_s^r<\infty
+		\end{aligned}
+	\end{equation}
+	因而$u\in L^r[a,b]\Rightarrow L^s[a,b]\subset L^r[a,b]$。且若$u_n\stackrel{L^s}{\longrightarrow}u\Rightarrow u_n\stackrel{L^r}{\longrightarrow}u$，注意上述结论是在有限测度集中。
+\end{itemize}
+
+\textbf{$l^p$空间中的Holder不等式}：
+\begin{equation}
+	\begin{aligned}
+		x&=(x_1,x_2,\cdots,x_n,\cdots)\in l^p\\
+		y&=(y_1,y_2,\cdots,y_n,\cdots)\in l^p\\
+		\sum_{i=1}^{+\infty}|x_iy_i|&\leqslant \left(\sum_{i=1}^{+\infty}|x_i|^p\right)^{1/p}\left(\sum_{i=1}^{+\infty}|y_i|^q\right)^{1/q}
+	\end{aligned}
+\end{equation}
+$p=q=2$柯西-施瓦兹不等式。
+\subsubsection{$C^{m}(J)$空间}
+以$u^{(k)}$记函数$u$的$k$阶导数，$u^{(0)}=u$。令
+\begin{equation}
+C^{m}(J)=\left\{u: u^{(k)} \in C(J) \quad(0 \leq k \leq m)\right\}
+\end{equation}
+约定$C^{(0)}(J)=C(J)$，定义：
+\begin{equation}
+\|u\|_{m}=\max _{0 \leq k \leq m}\left\|u^{(k)}\right\|_{0} \quad\left(u \in C^{m}(J)\right)
+\end{equation}
+
+\textbf{定理}：$C^{(m)}(J)$依上述范数是一个Banach空间。
+\begin{itemize}
+	\item []
+	\textbf{证}：$C^m(J)$显然是向量空间，验证范数$\|\cdot\|_m$满足范数公理也是容易的，只需证完备性。设$u_n$是$C^m(J)$中的柯西列，即
+	\begin{equation}
+		\lim_{n,l}\|u_n-u_l\|_m=0
+	\end{equation}
+	这相当于
+	\begin{equation}
+		\lim_{n,l}\|u^{(k)}_n-u^{(k)}_l\|_0=0,(0\leqslant k\leqslant m)
+	\end{equation}
+	即$\{u_n^{(k)}:n\in \mathbb{N}\}(0\leqslant k\leqslant m$依sup范数为Cauchy列，之前证明过$(C(J),\|\cdot\|_0)$完备，因此有$v_k\in C(J)$，使得$u_n^{(k)}\rightarrow v_k(n\rightarrow \infty,0\leqslant k\leqslant m)$。结合微积分学中的结果推出$v_k=v'_{k-1}(1\leqslant k\leqslant m)$。令$u=v_0$，则得$v_k=u^{(k)}$，$u_n^{(k)}\rightarrow u^{(k)}(n\rightarrow \infty),0\leqslant k\leqslant m$，这表明$u\in C^m(J)$且$\|u_n-u\|_m\rightarrow 0(n\rightarrow \infty)$。完备性得证。
+\end{itemize}
+包含关系：$\cdots C^m(J)\subset C^{m-1}(J)\subset \cdots \subset C(J) \subset L^{\infty}(J)\subset L^p(J)\subset L^r(J)\subset L^1(J).(1<r<p<+\infty$
+
+收敛性强弱：$C^{m}$ 收敛 $\Rightarrow C^{m-1}$ 收敛 $\Rightarrow C^{0}$ 收敛 $\Rightarrow L^{p}$ 收敛 $\Rightarrow L^{r}$ 收敛
+
+\subsection{点集与连续性}
+\subsubsection{点集}
+\textbf{定义}：空间$\bf{X}$的任何子集称作点集，其中的元素称为点。对比欧氏空间中的概念可定义：
+\begin{equation}
+\begin{aligned}
+&B_{r}(a)=\{x \in X:|| x-a||<r\} \\
+&\bar{B}_{r}(a)=\{x \in X:|| x-a|| \leq r\}
+\end{aligned}
+\end{equation}
+分别称之为$\bf{X}$中的以$a$为心以$r$为半径的开球与闭球。开球简称为球，$B_1(0)$称为单位球，球面用$S_r(a)$表示。
+
+设 $A \subset \bf{X}, x \in \bf{X}$.
+\begin{enumerate}
+	\item 内点: 存在正数 $r$, 使得 $B_{r}(x) \subset A$, 则称 $x$ 为 $A$ 的内点。$A$ 为 $x$ 的一个邻域, $A^{o}$ 记 $A$ 的内点之全体, 称它为 $A$ 的内部。
+	\item 触点: 若对 $\forall r>0$, 有 $A \cap B_{r}(x) \neq \emptyset$, 则称 $x$ 为 $A$ 的触点。以 $\bar{A}$ 记 $A$ 的触点之全体, 称它为 $A$ 的闭包。
+	\item 边界点: 若对 $\forall r>0$, 有 $A \cap B_{r}(x) \neq \emptyset, A^{c} \cap B_{r}(x) \neq \emptyset$,
+则称 $x$ 为 $A$ 的边界点。以 $\partial A$ 记 $A$ 的边界之全体, 称 它为 $A$ 的边界。
+	\item 聚点 (极限点) : 若对 $\forall r>0$, 有 $(A \backslash\{x\}) \cap B_{r}(x) \neq \emptyset$,
+则称 $x$ 为 $A$ 的聚点或极限点, 以 $A^{\prime}$ 记 $A$ 的聚点 之全体, 称为 $A$ 的导集。
+\end{enumerate}
+
+闭集：$\bar{A}=A$，开集$A^o=A$。性质：
+\begin{enumerate}
+	\item $A$为开集$\Leftrightarrow A^c$是闭集。
+	\item $A$为闭集等价于$A$对极限运算是封闭的
+	\item 运算性质
+	
+	          X中任意个闭集的交集或有限个闭集的并集为闭集；
+	          
+          X中任意个开集的并集或有限个开集的交集为开集。
+\end{enumerate}
+\begin{itemize}
+	\item []
+	\textbf{证}：
+	
+	(1) 已知$A$为开集，要证$A^c$为闭集，对$A^c$中任意一个收敛列$\{x_n,n\in \mathbb{N}\}$,设$\lim_nx_n=x$。假设$x\notin A^c$，则有$x\in A$，则存在一个$\varepsilon>0$，使$B_\varepsilon(x)\subseteq A$，则必有足够大的$n$使$x_n\in B_\varepsilon(x)\subset A$，与已知$x_n\in A^c$矛盾，因此$x\in A^c$，由此说明在$A^c$中极限运算封闭。
+
+		已知$A$为闭集，要证$A^c$为开集。对于$\forall x\in A^c$，若$x\notin (A^c)^o$，则有$r=1/n$使得$B_{1/n}(x)\bigcap A\neq \emptyset$，则取$x_n\in B_{1/n}(x)\bigcap A$	，则$\{x_n,x_n\in \mathbb{N}\}\subset  A$，且$\|x_n-x\|<1/n$，当$n\rightarrow \infty$时，$x_n$收敛于$x$，因为$A$为闭集，则$x\in A$，与$x\in A^c$矛盾，故对$\forall x\in A^c$，有$x\in (A^c)^o\Rightarrow$$A$为开集。
+\end{itemize}
+
+ 例1: 证明在 C(J) 中, $A \triangleq\{u \in C(J): u \text{在J上有零点 }\} \text{是闭集。}$
+ \begin{itemize}
+ 	\item []
+ 	\textbf{证}：直接证比较困难，可转化证$A^c$为开集。
+ 	
+ 	$A^c \triangleq\{u \in C(J): u \text{在J上没有零点 }\} \text{是开集。}$
+ 	
+ 	因为若$u(x)$在$[a,b]$上没有零点，由连续介值定理知，$u(x)>0$（或$u(x)<0$），则由最值定理，$\min_{x\in[a,b]}u(x)=m>0$，取$\varepsilon=m/2$，则$B_{\varepsilon}(u)\subseteq A^c$，因为$B_{\varepsilon}(u)$中的任意函数的最小值$\geq m/2$无零点，说明$A^c$为开集。
+ \end{itemize}
+\subsubsection{连续性}
+\textbf{连续定义}：给定映射$F:D\subset X\rightarrow Y$，点$x_0\in D$，若$\forall \varepsilon>0$，$\exists\delta>0$，当$x\in D,\|x-x_0\|<\delta$时恒有$\|Fx-Fx_0\|<\varepsilon$，则说映射$F$在点$x_0$处连续，若在$D$上每点都连续则说在$D$上连续。$C(D,Y)$表示从$D$到$Y$的连续映射之全体,$C(D)=C(D,K)$，$K=R$或$C$。对于$f\in C(D)$，更习惯把$f$叫做连续函数或连续泛函。
+
+\textbf{等价定义1}：对$\forall \varepsilon>0$，$\exists\delta>0$，使$F(D\bigcap B_{\delta}(x_0))\subset B_{\varepsilon}(Fx_0)$。
+
+\textbf{等价定义2}：若在$D$中，$x_n\rightarrow x_0$，则$Fx_n\rightarrow Fx_0$，即
+\begin{equation}
+	\lim_nF(x_n)=F(\lim_nx_n)
+\end{equation}
+最简单的例子：$f(x)=\|x\|$
+
+\textbf{定理}：设$D\subset X$是开集（闭集）
+\begin{enumerate}
+	\item 映射$F$：$D\rightarrow Y$连续的充要条件是：对任意的开（闭）集$V\subset Y$，$F^{-1}V$是$X$中的开（闭）集。
+	\item 函数$f$：$D\rightarrow R$连续的充要条件是$\forall \alpha\in R$，$D(f<\alpha)$与$D(f>\alpha)$都为开集。
+\end{enumerate}
+
+\subsubsection{基本集}
+对有限维的空间，$X=span\{e_1,e_2,\cdots,e_n\}$
+
+对无限维的空间，尽可能找出一个小的子集$A$，使空间$X$能由$A$中元素经过线性运算与极限运算取得，这一思想在Banach空间中具有重要的意义。
+
+设$A,B\subset X$，定义：
+\begin{enumerate}
+	\item 稠密：若$B\subset \bar{A}$，则说$A$在$B$中稠密；若$A\subset B\subset \bar{A}$，则说$A$为$B$的稠子集。$X$的稠子集就称为稠集。
+	\item 可分集：若$B$含可数的稠子集，则称$B$为可分集；若$X$本身可分，则称$X$为可分空间。
+	\item 基本集：若$\overline{spanA}=X$，即$spanA$为稠集，则称$A$为$X$的基本集。
+	\item Schauder（邵德尔）基：$\{e_i\}\subset X$是一序列，每个$x\in X$可唯一地表示为：$x=\sum_{i=1}^{\infty}a_ie_i,a_i\in K$，则称$\{e_i\}$为$X$的Schauder基。
+\end{enumerate}
+
+$X$可分$\Leftrightarrow X$有可数的基本集。
+
+有Schauder基$\Leftrightarrow$空间必定可分。
+
+\textbf{例1}：$l^p$空间（$1\leqslant p +\infty$）是可分空间。$e_i=(0,0,\cdots,0,1,0,\cdots,0,\cdots)$，$\{e_i,i\in \mathbb{N}\}$为Schauder基。
+\begin{enumerate}
+	\item []
+	\textbf{证}：因为$\forall x=(x_1,x_2,\cdots,x_n,\cdots)\in l^p$有：
+\begin{equation}
+	\|x-\sum_{i=1}^{n}x_ie_i\|_p^p=\sum_{i>n}^{\infty}|x_i|^p\rightarrow 0, n\rightarrow \infty
+\end{equation}
+$\Leftrightarrow x=\sum_{i=1}^{+\infty} x_ie_i$
+
+\end{enumerate}
+
+\textbf{例2}：$l^{\infty}$空间是不可分空间。思路：找到不可数多个向量，而每个向量之间的距离都大于某个常数，这样就不可能拿可数多个点去逼近这不可数多个点了。
+\begin{enumerate}
+	\item []
+	\textbf{证}：如$y=(y_1,y_2,\cdots,y_n,\cdots)$，其中$y_i$只取1或0两个数字，令$\hat{y}=0.y_1y_2\cdots y_n\cdots=y_1/2+y_2/2^2+\cdots+y_n/2^n+\cdots$二进制纯小数$\leftrightarrow$十进制纯小数，这样$\hat{y}$与$[0,1]$中的数一一对应，$y$和$\hat{y}$也是一一对应关系，且每两个不同的$y$之间的距离为1。以每个$y$为球心，$1/4$为半径作球，这样有不可数多个球且互不相交。故不可能存在可数的稠子集了。
+\end{enumerate}
+
+\textbf{空间$C[a,b]$的基本集}：$\{1,x,x^2,\cdots,x^n,\cdots \}$
+
+\textbf{空间$L^p[a,b]$的基本集}：$\{1,x,x^2,\cdots,x^n,\cdots \}$或者$\left\{\chi_{\delta}: \delta\right.$ 是 $[\mathrm{a}, \mathrm{b}]$ 的子区间 $\}$
+
+同理，$L^{\infty}[a,b]$是不可分空间。
+
+\textbf{例3}：设$u\in L^1(J),J=[a,b]$，则$\lim_n\int_a^bu(x)\sin nxdx=0$。思路：先在$L^1(J)$的某个稠子集空间中证明该结论（缩小范围），再在稠子空间的基本集上证明该结论（再缩小范围）
+\begin{enumerate}
+	\item []
+	(1) 设$u=\chi^{(x)}_{(\alpha,\beta)}=\begin{cases}1, & x \in(\alpha, \beta) \\ 0, & x \notin(\alpha, \beta)\end{cases}$，特征函数，显然结论成立，$\int_a^bu(x)\sin nxdx=\int_\alpha^\beta \sin nxdx=-\left.\frac{\cos n x}{n}\right|_{\alpha} ^{\beta} \rightarrow 0$
+	
+	(2)可知对$\forall u$为阶梯函数也成立
+	
+	(3) 对$\forall\varepsilon>0$，对$\forall u\in L^1(J)$，存在阶梯函数$v$，使得：$\|v-u\|_1<\frac{\varepsilon}{2}$。且存在$N$，当$n>N$时有$\left|\int_a^bv(x)\sin nxdx\right|<\frac{\varepsilon}{2}$，于是当$n>N$时，$\left|\int_a^bu(x)\sin nxdx\right|\leqslant \int_a^b\left|(u(x)-v(x))\sin nx\right|dx+\left|\int_a^bv(x)\sin nxdx\right|\leqslant\|u-v\|_1+\frac{\varepsilon}{2}<\varepsilon$
+\end{enumerate}
+~\\
+\textbf{问题}：有界闭区间$[a,b]$上的连续函数为什么有最大最小值？
+\begin{itemize}
+	\item []
+	\textbf{分析}：设$f(x)$在$[a,b]$上连续，$\sup_{x\in[a,b]}f(x)=M$(可能有限，可能无穷大）。则由上确界定义，一定存在一列$x_n\in[a,b]$，使得$f(x_n)\rightarrow M,f(x_n)\leqslant M$，怎样得出$M$为有限值？且$f(x)$能取到$M$值？
+	
+	关键：数列$\{x_n,n\in\mathbb{N}\}$有收敛子列$x_{nj}\rightarrow x_0\in [a,b]$(有界数列一定存在收敛子列，可以这样考虑：对$[a,b]$平均分，使得每个小区间长不超过$\varepsilon$，至少有一个小区间含有数列${x_n,n\in \mathbb{N}}$中的无穷多个数)，由此有$f(x_{{n_j}})\rightarrow f(x_0)$（连续性），由此有$f(x_0)=M$，因此$M$为有限值且可达到。
+\end{itemize}
+
+\subsection{紧性与纲定理}
+在数学中经常涉及到解或研究对象的存在性问题，及多少的问题。
+ 紧性为解决存在性问题，纲定理为解决多少的问题提供有力的理论工具。（如有界闭区间上的连续函数一定有最大最少值等）。
+ 
+\subsubsection{紧性}
+紧集定义：设$A\subset X$,  如果$A$中任何序列都有收敛子列，则称$A$为
+                    相对紧集，若$A$中任何序列都有收敛子列且其极限
+                    属于$A$，则称$A$为紧集。注：     紧集就是闭的相对紧集，
+               相对紧集一定是有界集， 紧集一定是有界闭集。
+
+在有限维空间中：  相对紧集$\Leftrightarrow$有界集， 紧集$\Leftrightarrow$有界闭集。
+在无穷维空间中， 它们就没有等价关系了。
+
+\textbf{定理}：对于$A\subset X$，给出以下条件：
+\begin{enumerate}
+	\item $A$是紧集
+	\item $A$的任何无限子集必有聚点
+	\item 若 $A \supset B_{n} \supset B_{n+1}, B_{n}(n=1,2, \cdots)$ 是非空闭集，则 $\cap B_{n} \neq \emptyset$
+	\item $A$的任何开覆盖有有限子覆盖
+	\item $A$是全有界集，即$\forall r>0$，$A$可用有限个半径为$r$的球覆盖。
+\end{enumerate}
+则当 $A$ 相对紧时, 条件(5)满足, 即相对紧集是全有界集。
+当 $A$ 是闭集时, $(1) \Leftrightarrow(2) \Leftrightarrow(3) \Leftrightarrow(4) \Rightarrow$ (5)。
+当$X$完备且 $A$ 是闭集时，(1)至(5)互相等价。
+
+紧集的某些应用：
+
+\textbf{定理1}: $D \subset X$ 是紧集, $F \in C(D, Y), f \in C(D, R)$. 则有以下结论:
+
+(1) $FD$是$Y$中的紧集, 因此有界； $F$ 在D上一致连续, 即 $\forall \varepsilon>0, \exists \delta>0$, 当 $x, y \in D,\|x-y\|<\delta$ 时,
+$$
+|| F x-F y||<\varepsilon \text {; }
+$$
+
+(2) $F$在$D$上取得最大与最小值。
+\begin{itemize}
+	\item []
+	\textbf{证} (i) 任给序列 $\left\{x_{n} \mid \subset D\right.$, 由 $D$ 紧必有收敛子列 $\left\{x_{n}\right\}: x_{n} \rightarrow x \in D$, 因 而 $F x_{n_{k}} \rightarrow F x \in F D$. 这表明 $F D$ 是紧集. 若 $F$ 在 $D$ 上非一致连续, 则对某个 $\varepsilon>$ 0 有 $x_{n}, y_{n} \in D(n=1,2, \cdots)$, 使得 $x_{n}-y_{n} \rightarrow 0$, 而 $\left\|F x_{n}-F y_{n}\right\| \geqslant \varepsilon(n=1$, $2, \cdots)$ (写出 “非一致连续"的这一刻画对于证明是关键的). 如同上面一样, $\left\{x_{n}\right\}$ 有收敛子列 $\left|x_{n_{1}}\right|: x_{n_{k}} \rightarrow x \in D(k \rightarrow \infty)$; 同样有 $y_{n_{k}} \rightarrow x$, 但这推出
+$$
+\varepsilon \leqslant \lim _{k}\left\|F x_{n_{k}}-F y_{n_{k}}\right\|=\|F x-F x\|=0 \text {, }
+$$
+得出矛盾. 因此 $F$ 必定一致连续.
+
+(ii) 不妨只证最大值存在. 令 $\beta=\sup _{x \in D} f(x)$. 取 $\left.\mid x_{n}\right\} \subset D$, 使得 $f\left(x_{n}\right) \rightarrow \beta(n$ $\rightarrow \infty)$. $\left\{x_{n} \mid\right.$ 有收敛子列 $\left\{x_{n_{k}} \mid: x_{n_{k}} \rightarrow x \in D(k \rightarrow \infty)\right.$, 则
+$$
+f(x)=\operatorname{lim}_{k}f\left(x_{n_{k}}\right)=\beta,
+$$
+显然 $\beta$ 即为 $f$ 在 $D$ 上的最大值.
+\end{itemize}
+ 
+ 最优点或最优解: 若 $\bar{x} \in D$ 使得 $f(\bar{x})=\min _{x \in D} f(x)$, 则通常说 $\bar{x}$ 是最小化问题 $\min f(x), x \in D$ 的最优点 或最优解。
+ 
+推论: (最佳逼近): 设A是X的有限维子空间, $x \in X$. 则存在 $a \in A$, 使得 $\|\mathrm{X}-a\|=d(x, A)$. 换言之, $a$ 是 $\mathrm{A}$ 中离x最近的点, 因此称它是x在 $A$ 中的最佳 逼近。 缺点：它只解决了存在性问题, 但如何求它的方法并末解决。 下节会在Hilbert空间中解决具体的计算方法问题。                  
+
+紧集的判定：
+\textbf{定理1}(Arzela-Ascoli定理) $: A \subset C(J)$ 相对紧的充要条件是:
+
+(1) $A$ 一致有界, 即依sup范数有界；
+
+(2) $A$等度连续: 即 $\forall \varepsilon>0, \exists \delta>0, \forall x, y \in J, \forall u \in A$, 当 $|x-y|<\delta$ 时恒有 $|u(x)-u(y)|<\varepsilon$.
+
+例： $C^{1}(J)$ 中的有界集 $A\left(\right.$ 依 $C^{1}$ 范数）, 作为空间 $C(J)$ 的子集是相 对紧的。
+
+\textbf{定理2}：设 $1 \leq p<\infty, A \subset l^{p}$, 则A相对紧的充要条件是:
+
+(1) $A$有界, 即 $\sup _{x \in A}\|x\|_{p}<\infty$;
+
+(2) 关于 $x=\left(x_{i}\right) \in A$, 一致地有 $\sum_{i>n}\left|x_{i}\right|^{p} \rightarrow 0,(n \rightarrow \infty)$. 即 $\forall \varepsilon>0, \exists N>0, \forall n \geq N, \forall x \in A$, 有 $\sum_{i>n}\left|x_{i}\right|^{p}<\varepsilon$.
+
+例: Hilbert方体: $A=\left\{x=\left(x_{i}\right):\left|x_{i}\right| \leq \frac{1}{i}(\forall i \in N)\right\}$ 是空间 $l^{2}$ 中的紧集。
+
+\textbf{定理3}：若$\dim X=\infty$，即$X$是无穷维空间，则$X$中的闭单位球不是紧集。
+
+\textbf{Riesz引理}：设$A$是$X$中的闭子空间，$A\neq X,0<r<1$，则存在$x\in X$，使得$d(x,A)>r$，且$\|x\|=1$。
+
+\begin{itemize}
+	\item []
+	\textbf{引理证明}：对于$\forall X-A$，必定$\rho\triangleq d(y,A)>0$，则存在$a\in A$，使得：$\|y-a\|<\rho/r$，令$x=(y-a)/\|y-a\|$，则$\|x\|=1$，$d(x,A)=d((y-a)/\|y-a\|,A)=d(y-a,A)/\|y-a\|=d(y,A)/\|y-a\|>\rho/(\rho/r)=r$(注：在Hilbert空间中能够使$d(x,A)=1,\|x\|=1$，即$x\perp A$)
+\end{itemize}
+
+\begin{itemize}
+	\item []
+	\textbf{定理3证明}：利用引理可知存在序列$\{x_1,x_2,\cdots,x_n,\cdots\}$，满足：
+	\begin{equation}
+		i\neq j,\|x_i-x_j\|>1/2. \|x_i\|=1
+	\end{equation}
+\end{itemize}
+显然它不可能有收敛子列。
+
+最小值不存在的例子：$X=C[0,1]$，$f(u)=\int_{0}^{1}|u(x)| d x \quad(u \in X)$，显然$f\in C(X,R)$，且在$S \triangleq\left\{u \in X:\left.|| u\right|_{0}=1\right\}$上$f(u)>0$，取$u_n(x)=x^n$，知：$u_n\in S，f(u_n)\rightarrow 0,(n\rightarrow \infty)$时，这表明$\inf_{u\in S}f(u)=0$，但取不到，即没有最优解。
+
+\subsection{Hilbert空间}
+
+\subsubsection{内积空间}
+\textbf{定义}：设$H$是$K$上的向量空间，若对任一对元$x,y\in H$，指定了一个数$<x,y>\in K$，称为$x$与$y$的内积，它满足以下的内积公理：
+\begin{enumerate}
+	\item 对第一个变量的线性性：
+	\begin{equation}
+		<\alpha x+\beta z, y>=\alpha<x, y>+\beta<z, y>;(\forall \alpha, \beta \in K)
+	\end{equation}
+	\item 共轭对称性
+	\begin{equation}
+<x, y>=\overline{<y, x>}
+\end{equation}
+	\item 正定性：
+	\begin{equation}
+<x, x>\geqslant 0 ;<x, x>=0 \Leftrightarrow x=0
+\end{equation}
+\end{enumerate}
+则称$H$为$K$上的内积空间；$K=R(C)$时称$H$为实(复)内积空间。
+
+$$
+\langle x, \alpha y+\beta z\rangle=\bar{\alpha}\langle x, y\rangle+\bar{\beta}\langle x, z\rangle \quad(x, y, z \in H, \alpha, \beta \in \mathbf{K}) .
+$$
+这表明,内积 $\langle x, y\rangle$ 是 “一个半线性”的: 对 $x$ 是线性的, 对 $y$ 是共轭线性的. 若 $\mathbf{K}=\mathbf{R}$, 则内积是双线性的, 而共轭对称性等价于对称性: $\langle x, y\rangle=\langle y, x\rangle$. 一舧地,若 $\sum \alpha_{i} x_{i}$ 与 $\sum \beta_{i} y_{j}$ 是 $H$ 中元的两个有限线性组合, 則
+$$
+\begin{aligned}
+&\left\langle\sum_{i} \alpha_{i} x_{i}, \sum_{j} \beta_{i} y_{j}\right\rangle=\sum_{i, j} \alpha_{i} \bar{\beta}_{j}\left\langle x_{i}, y_{i}\right\rangle ; \\
+&\left\langle\sum_{i} \alpha_{i} x_{i}, \sum_{i} \alpha_{i} x_{i}\right\rangle=\sum_{i, k} \alpha_{i} \bar{a}_{k}\left\langle x_{i}, x_{k}\right\rangle .
+\end{aligned}
+$$
+
+回顾矩阵论中的内积定义及有限维空间中常用的内积。约定：
+\begin{equation}
+|| x||=\sqrt{<x, x>}
+\end{equation}
+称之为内积诱导的范数。
+
+性质（Schwarz不等式）：对任给的$x,y\in H$有
+\begin{equation}
+|\langle\mathrm{x}, \mathrm{y}\rangle|\leq\|x\|\|y\| .
+\end{equation}
+利用上述不等式可证明三角不等式。因此，在内积空间中总用内积诱导的范数，而内积空间自动看成赋范空间，内积空间完备时称为Hilbert空间。赋范空间的所有性质内积空间也都具备，我们要研究的是内积空间所特有的性质。
+
+内积依范数收敛是连续的，即内积与极限运算可交换次序：
+\begin{equation}
+\lim _{m, n}<x_{m}, y_{n}>=<\lim _{m} x_{m}, \lim _{n} y_{n}>
+\end{equation}
+
+\textbf{$l^2$空间中的内积}：$<x, y>=\sum_{i=1}^{\infty} x_{i} \overline{y_{i}},\left(x=\left(x_{i}\right), y=\left(y_{i}\right) \in l^{2}\right)$
+
+\textbf{$L^2$空间中的内积}:$<u, v>=\int_{\Omega} u(x) \overline{v(x)} d \mu, \quad\left(u, v \in L^{2}(\Omega)\right)$
+~\\
+
+\textbf{问题}：$l^p$空间与$L^p(\Omega)$中还有其他的内积空间吗？
+\begin{itemize}
+	\item []
+	没有，只有$p=2$时才会是内积空间。$p\neq 2$时没有办法定义内积使得由内积诱导的范数与原范数一致，下面的定理解决了这一问题。
+\end{itemize}
+
+\textbf{定理}:$K$上的赋范空间$X$是内积空间的充要条件是其范数满足如下的中线公式（平行四边形法则）：
+\begin{equation}
+\|x+y\|^{2}+\|x-y\|^{2}=2\left(\|x\|^{2}+\|y\|^{2}\right)
+\end{equation}
+\begin{itemize}
+	\item []
+	\textbf{证明思路}：必要性：当$X$为内积空间时容易验证它满足上式。充分性：若上式成立，利用极化恒等式。
+\end{itemize}
+
+$\mathrm{K}=\mathrm{R}$ 时, 令： $<x, y>=\|x+y\|^{2}-\|x-y\|^{2} ;$
+
+$\mathrm{K}=\mathrm{C}$, 令: $<x, y>=\|x+y\|^{2}-\|x-y\|^{2}+i\left(\|x+i y\|^{2}-\|x-i y\|^{2}\right)$
+
+\textbf{正交系}：
+\begin{enumerate}
+	\item 设$x,y\in H$，若$\langle x,y\rangle=0$，则说$x$与$y$正交，记作$x\perp y$。
+	\item 设$\{x_i:i\in I\}\subset H$，若当$i\neq j$时，$x_i\perp x_j$，则称$\{x_i\}$为正交系，若有$\|x_i\|=1$，则称$\{x_i\}$为标准正交系。
+	\item 设$A,B\subset H$，约定：$A\perp B\Leftrightarrow\forall a\in A,\forall b\in B$，有$a\perp b$，同样理解$a\perp A$；$A^{\perp}=\{x\in H;x\perp A\}$，称$A^{\perp}$为$A$的正交补。当$A\perp B$时说$A$与$B$互相正交。
+\end{enumerate}
+
+\textbf{标准正交基}：设 $\left\{e_{i}: \mathrm{i} \in N\right\}$ 是H中的标准正交系。
+若对每个 $x \in H$ ，有表达式:
+$$
+x=\sum_{i} \alpha_{i} e_{i} .
+$$
+则 $\left< x, e_{i}\right>=\left<\sum_{j} \alpha_{j} e_{j}, e_{i}\right>=\alpha_{i}$.
+则称 $\left\{e_{i}: \mathrm{i} \in N\right\}$ 是H中的标准正交基, $\alpha_{i}=\left\langle x, e_{i}\right\rangle$, 称为正交坐 标。
+
+\textbf{定理}: 设 $\left\{e_{i}: \mathrm{i} \in N\right\}$ 是H中的标准正交系, 则以下条件互相等价:
+\begin{enumerate}
+	\item $\left\{e_{i}\right\}$ 是 $\mathrm{H}$ 的标准正交基；
+	\item $\left\{e_{i}\right\}$ 是H的基本集；
+	\item $\left\{e_{i}\right\}$ 是极大正交系, 即若 $x \perp e_{i},(\forall i \in \mathrm{H})$, 则 $\mathrm{x}=0$;
+	\item 对任给的 $x \in H$, 成立如下的Parseval等式:
+$$
+\|x\|^{2}=\sum_{i}\left|<x, e_{i}>\right|^{2} \text {; }
+$$
+\item 对任给 $x, y \in H$, 成立如下的内积公式:
+$$
+<x, y>=\sum_{i}<x, e_{i}>\overline{<y, e_{i}}>\text {. }
+$$
+\end{enumerate}
+\begin{itemize}
+	\item []
+	\textbf{证：}1$\rightarrow$2：$\forall x\in H$，有$x=\sum_{i=1}^{+\infty}\langle x,e_i\rangle e_i \rangle e_i\Rightarrow \{e_i,i
+	in \mathbb{N}\}$为基本集。
+	
+	$2\Rightarrow 3$：若有$x\perp e_i,i\in \mathbb{N}$，则有$x\perp span\{e_i,i \in \mathbb{N}\}$，即$\langle x,\sum_{i=1}^{n}k_ie_i\rangle =0\Rightarrow x\perp\overline{span\{e_i,i\in \mathbb{N}\}}=H\Rightarrow x\perp x\Rightarrow x=0$（因为有$x_n\in span\{e_i,i\in \mathbb{N}\}$使$x_n\rightarrow x$且$\langle x_n,x\rangle=0\Rightarrow\langle x,x\rangle=0$）
+	
+	$3\Rightarrow 1$：设$A_n=span\{e_1,e_2,\cdots,e_n\}$，对$\forall x\in H$，则$x$在$A_n$上的正交投影为：$x_n=\sum_{i=1}^n\langle x,e_i\rangle e_i$，那么$x-x_n$是$x$在$A_n^{\perp}$上的正交投影，即$x-x_n\in A_n^{\perp}$（$\langle x-x_n,e_j\rangle=\langle x,e_j\rangle -\langle x_n,e_j\rangle =\langle x,e_j\rangle-\langle x,e_j\rangle=0,\forall j=1,2,\cdots$）。
+	要证$\{e_i,i\in \mathbb{N}\}$为标准正交基，等价要证$x-x_n\rightarrow 0$即$x_n\rightarrow x$。先$\|x_n\|^2+\|x-x_n\|^2=\|x\|^2\Rightarrow \sum_{i=1}^{n}|\langle x,e_i\rangle|^2=\|x_n\|^2\leqslant \|x\|^2\Rightarrow$级数$\sum_{i=1}^{+\infty}|\langle x,e_i\rangle|^2$收敛且$\leqslant\|x\|^2\Rightarrow x_n$有极限$y$，则$y=\sum_{i=1}^{\infty}\langle x,e_i\rangle e_i$且$x-y\perp e_i\forall i\in \mathbb{N}$，由极大性知$x-y=0$
+	
+	显然$1\Rightarrow 5\Rightarrow 4$
+	
+	$4\Rightarrow 1$：设$y=\sum_{i=1}^{\infty}\langle x,e_i\rangle e_i$，由4知有$\|x\|=\|y\|$，又$x-y\perp e_i\Rightarrow x-y\perp y,x=x-y+y,\|x\|^2=\|x-y\|^2+\|y\|^2\Rightarrow x-y=0$
+\end{itemize} 
+\textbf{常用的标准正交基的例子}：
+\begin{enumerate}
+	\item 三角函数系: 取 $J=[-\pi, \pi]$. 函数系 $\left\{\frac{1}{\sqrt{2 \pi}}, \frac{\cos n x}{\sqrt{\pi}}, \frac{\sin n x}{\sqrt{\pi}}, n=1,2, \cdots\right\}$
+是 $L^{2}(\mathrm{~J})$ 的标准正交基, 每个 $u \in L^{2}(\mathrm{~J})$, 可展开为均方收敛的Fourier 级数（微积分中是处处收敛）:
+$$u(x)=\frac{a_{0}}{2}+\sum_{n=1}^{\infty}\left(a_{n} \cos n x+b_{n} \sin n x\right)$$
+其中 $a_{n}, b_{n}$ 是通常的Fourier系数, (与正交坐标系有区别）。
+注意: 上式收敛是均方收敛而不是处处收敛, 但可以证明它是几乎处处收敛。 它对函数 $\mathrm{u}$ 的条件放宽了, 没有微积分那么强了。
+一般称正交坐标 $\alpha_{i}=\left\langle x, e_{i}\right\rangle$ 为 $\mathrm{x}$ 关于标准正交基 $\left\{e_{i}\right\}$ 的Fourier系数。
+		\item  Legendre 多项式系: 取 $J=[-1,1]$,
+由前知 $L^{2}(J)$ 有基本集$\left\{1, x, x^{2}, \cdots,\right\}$,  将其标准正交化可得出 Legendre 多项式系 $\left\{L_{n}: \mathrm{n} \geq 0\right\}$, 它是标准正交基。
+$$
+L_{n}(x)=\frac{1}{2^{n} n !} \sqrt{\frac{2 n+1}{2}} \frac{d^{n}}{d x^{n}}\left(x^{2}-1\right)^{n}, \quad(\mathrm{n} \geq 0) .
+$$
+如： $L_{0}=\frac{1}{\sqrt{2}},\quad L_{1}=\sqrt{\frac{3}{2}} x, L_{2}=\sqrt{\frac{5}{8}}\left(3 x^{2}-1\right), \cdots$.
+若 $J=[a, b]$,则可通过线性代换： $\varphi(x)=\frac{2 x-a-b}{b-a}$, 得到标准正交基: $\sqrt{\frac{2}{b-a}} L_{n}(\varphi(x))$.
+\end{enumerate}
+
+\subsubsection{最佳逼近}
+如前所述最佳逼近问题：对于给定的集 $A \subset H$, 与点 $x \in H$, 求一点 $a \in A$, 使得 ||$x-a||=d(x, A)$。 这意味着$a$是最小化问题： $\min || x-a||, a \in A$
+的最优解。对于A是H的子空间，问题很好解决。
+
+\textbf{定理}： 设A是H的完备子空间, $x \in H$。
+\begin{enumerate}
+	\item 存在唯一性: $x$ 在A中有唯一的最佳逼近 $a$, 且 $x-a \in A^{\perp}$。
+	\item 用A的基求最佳逼近：若 $\left\{a_{1}, a_{2}, \cdots, a_{n}\right\}$ 是A的基, $a$ 是x 在 A中的最佳逼近, 则 $a=\sum_{i=1}^{n} \beta_{i} a_{i}$. 其中:
+$\beta=\left(\beta_{1}, \beta_{2}, \cdots, \beta_{n}\right)^{T}=G^{-1}\left(<x, a_{1}>, \cdots,<x, a_{n}>\right)^{T} .$
+$\mathrm{G}=\left[\left\langle a_{j}, a_{i}\right\rangle\right]_{n \times n}$ 称为向量组 $\left\{a_{i}\right\}$ 的Gram矩阵。
+	\item 用A的标准正交基求最佳逼近：若 $\left\{e_{1}, e_{2}, \cdots, e_{n}\right\}$ 是 $\mathrm{A}$ 的标准正
+交基, $a$ 是x 在 A中的最佳逼近, 则:
+$$
+a=\sum_{i=1}^{n}<x, e_{i}>e_{i} .
+$$
+证明思想：主要利用平行四边形法则。
+\end{enumerate}
+
+\textbf{例1}：在$J=[0,1]$上求最佳均方逼近$u(x)=e^x$的二次多项式。
+\begin{itemize}
+	\item []
+	解：以 $A$ 记 $J$ 上次数 $\leqslant 2$ 的多项式之全体,则 $\{1, x, x^{2}\}$ 是 $A$ 的基, 其 Gram 矩阵为
+	$$
+G=\left[\begin{array}{ccc}
+1 & 1 / 2 & 1 / 3 \\
+1 / 2 & 1 / 3 & 1 / 4 \\
+1 / 3 & 1 / 4 & 1 / 5
+\end{array}\right]
+$$
+以 $\langle \cdot, \cdot\rangle$ 记 $L^{2}[0,1]$ 中的内积,依次算出
+$$
+\left\{\begin{array}{l}
+\langle u, 1\rangle=\int_{0}^{1} \mathrm{e}^{x} \mathrm{~d} x=\mathrm{e}-1 . \\
+\langle u, x\rangle=\int_{0}^{1} x \mathrm{e}^{x} \mathrm{~d} x=1 . \\
+\left\langle u, x^{2}\right\rangle=\int_{0}^{1} x^{2} \mathrm{e}^{x} \mathrm{~d} x=\mathrm{e}-2 .
+\end{array}\right.
+$$
+于是，最佳均方逼近2次多项式为
+$$
+\begin{aligned}
+P(x) &=\left(1, x, x^{2}\right) G^{-1}(\mathrm{e}-1,1, \mathrm{e}-2)^{\mathrm{T}} \\
+&=39 \mathrm{e}-105+(588-216 \mathrm{e}) x+(210 \mathrm{e}-570) x^{2} \\
+& \approx 1.0130+0.8511 x+0.8392 x^{2} .
+\end{aligned}
+$$
+\end{itemize}
+
+
+\section{线性算子与线性泛函}
+本章主要讨论无穷维空间之间的线性映射。总假定$X,Y,Z$都是赋范空间，$K$是数域，一般为$R$或$C$。
+\subsection{有界线性算子}
+\subsubsection{线性算子}：在线性空间上保持线性运算的映射。（可与线性运算交换次序，即具有线性性）
+
+简单性质：$T$是$X$到$Y$的线性算子，有
+\begin{enumerate}
+	\item 子空间的像或原像还是子空间，特别$T(0)=0$，$R(T)$为像空间（值域），$N(T)$称为$T$的核或零空间。
+	\item 如果原像是线性相关的，则像是线性相关的。像空间的维数小于等于原像空间的维数。
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
